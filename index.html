@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stardoi Map - Upgraded</title>
+    <title>Stardoi Map - Final</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rye&family=Quicksand:wght@500&display=swap" rel="stylesheet">
@@ -80,31 +80,15 @@
     <div id="map"></div>
 
     <script>
-        // === 1. CUSTOM MAP STYLE ===
-        // Style from Snazzy Maps (Subtle Green Tones)
-        const mapStyle = [
-            { "featureType": "administrative", "elementType": "labels.text.fill", "stylers": [{ "color": "#444444" }] },
-            { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] },
-            { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-            { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] },
-            { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] },
-            { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
-            { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] },
-            { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#a8d1e2" }, { "visibility": "on" }] }
-        ];
-
         function initMap() {
             const mapCenter = { lat: 15.8700, lng: 100.9925 };
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 6,
                 center: mapCenter,
-                styles: mapStyle, // Apply the custom style here
-                streetViewControl: false, // Optional: Hide street view button
-                mapTypeControl: false    // Optional: Hide map/satellite toggle
+                streetViewControl: false, 
+                mapTypeControl: false    
             });
 
-            // === 2. CUSTOM MARKER ICON & 3. RICHER DATA ===
-            // Using a free sheep icon from a public source
             const customIconUrl = 'https://i.imgur.com/g1u2Y5w.png'; 
 
             const locations = [
@@ -113,7 +97,8 @@
                     title: "StardoiCoffee & Farmstay",
                     address: "296, Si Don Mun, Chiang Saen, Chiang Rai",
                     url: "https://www.stardoi.com/",
-                    image: "https://i.imgur.com/w9N02nf.jpg", // Placeholder image
+                    // === รูปภาพอัปเดตแล้ว ===
+                    image: "https://github.com/temsiripuns100/stardoi/blob/main/stardoi_cover.jpg?raw=true", 
                     hours: "08:00 - 18:00 Daily",
                     phone: "091-234-5678"
                 },
@@ -122,7 +107,8 @@
                     title: "StardoiFarm Khaoyai",
                     address: "161/2, Mu Si, Pak Chong, Nakhon Ratchasima",
                     url: "https://kaehcare.github.io/StardoiFarmKhaoyaiMap/",
-                    image: "https://i.imgur.com/n14T3h0.jpg", // Placeholder image
+                    // === รูปภาพอัปเดตแล้ว ===
+                    image: "https://github.com/temsiripuns100/stardoi/blob/main/stardoi_kh.jpg?raw=true",
                     hours: "09:00 - 19:00 (Closed Wed)",
                     phone: "092-345-6789"
                 },
@@ -138,12 +124,11 @@
                     position: location.position,
                     map: map,
                     title: location.title,
-                    // Apply custom icon unless it's the 'coming soon' location
                     icon: location.status !== 'coming_soon' ? {
                         url: customIconUrl,
-                        scaledSize: new google.maps.Size(48, 48) // Resize the icon
+                        scaledSize: new google.maps.Size(48, 48)
                     } : null,
-                    animation: google.maps.Animation.DROP // === 4. MARKER ANIMATION ===
+                    animation: google.maps.Animation.DROP
                 });
 
                 let contentString = '';
@@ -151,7 +136,7 @@
                     contentString = `<div class="info-window-content" style="padding:10px;"><strong>COMING SOON</strong></div>`;
                 } else {
                     const destination = `${location.position.lat},${location.position.lng}`;
-                    const navigationUrl = `https://www.google.com/maps/dir/?api=1&destination=${destination}`;
+                    const navigationUrl = `http://googleusercontent.com/maps/google.com/11{destination}`;
                     
                     contentString = `
                         <div class="info-window-content">
