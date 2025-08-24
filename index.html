@@ -68,7 +68,6 @@
                 center: mapCenter,
             });
 
-            // เพิ่ม property 'status' เพื่อเช็ค 'coming_soon'
             const locations = [
                 {
                     position: { lat: 20.25841, lng: 100.06305 },
@@ -87,7 +86,15 @@
                     title: "StardoiFarm Pattaya",
                     address: "Pattaya, Chonburi",
                     url: null,
-                    status: 'coming_soon' // <-- เพิ่ม status สำหรับเช็คเงื่อนไข
+                    status: 'coming_soon'
+                },
+                // === หมุดที่เพิ่มเข้ามาใหม่ ===
+                {
+                    position: { lat: 13.8115, lng: 100.7850 }, // พิกัดโดยประมาณของ สุวินทวงศ์ 8 มีนบุรี
+                    title: "StardoiFarm Bangkok-Suwinthawong",
+                    address: "Suwinthawong, Min Buri, Bangkok 10510",
+                    url: null,
+                    status: 'coming_soon' // <-- กำหนดให้เป็น COMING SOON
                 }
             ];
 
@@ -100,7 +107,6 @@
 
                 let contentString = '';
 
-                // **แก้ไขจุดนี้: เพิ่มเงื่อนไขสำหรับ 'coming_soon'**
                 if (location.status === 'coming_soon') {
                     contentString = `<div class="coming-soon-popup">COMING SOON</div>`;
                 } else {
