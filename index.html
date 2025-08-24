@@ -1,121 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Stardoi Map - Final</title>
+    <title>Stardoi Map</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rye&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
 
     <style>
+        /* กำหนดขนาดของแผนที่ */
+        #map {
+            height: 90vh; /* ลดความสูงเล็กน้อยเพื่อให้เห็นหัวข้อ */
+            width: 100%;
+        }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            background-color: #fdfaf6;
-        }
-        #map {
-            height: 90vh;
-            width: 100%;
+            background-color: #f0f0f0; /* สีพื้นหลังเว็บเล็กน้อย */
         }
 
-        /* --- STYLES FOR THE PAGE TITLE --- */
+        /* 2. Style หัวข้อหลักของหน้าเว็บ */
         .map-title {
             font-family: 'Rye', cursive;
-            color: #4a5d23; /* Dark Green */
+            color: green;
             text-align: center;
-            text-transform: uppercase;
+            text-transform: uppercase; /* ทำให้เป็นตัวพิมพ์ใหญ่ */
             font-size: 2.5em;
             margin: 20px 0;
         }
 
-        /* --- STYLES FOR INFO WINDOW CONTENT --- */
+        /* 3. Style เนื้อหาใน InfoWindow (กล่องข้อความ) */
         .info-window-content {
-            font-family: 'Quicksand', sans-serif; /* A clean font for details */
-            color: #333;
-            text-align: center;
-            max-width: 250px;
+            font-family: 'Rye', cursive;
+            color: green;
         }
         .info-window-content strong {
+            text-transform: uppercase; /* ทำให้ชื่อสถานที่ในกล่องเป็นตัวพิมพ์ใหญ่ */
+            font-size: 1.1em;
+        }
+        .info-window-content a {
+            text-decoration: none;
+            color: green;
+        }
+        
+        /* 4. Style สำหรับ Popup 'COMING SOON' */
+        .coming-soon-popup {
             font-family: 'Rye', cursive;
-            color: #4a5d23;
-            text-transform: uppercase;
-            font-size: 1.2em;
-        }
-        .info-window-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .info-window-details p {
-            margin: 5px 0;
-            text-align: left;
-            font-size: 0.9em;
-        }
-        .info-window-details a {
-            color: #1a73e8;
-            text-decoration: none;
-        }
-        .info-window-buttons {
-            margin-top: 15px;
-        }
-        .action-button {
-            display: inline-block;
-            margin: 0 5px;
-            padding: 8px 12px;
-            background-color: #6b8e23; /* Olive Green */
-            color: white !important;
-            border-radius: 5px;
-            font-size: 0.8em;
-            text-transform: uppercase;
-            text-decoration: none;
-        }
-        .action-button.directions {
-            background-color: #28a745; /* Brighter Green for directions */
+            color: green;
+            font-size: 1.5em;
+            text-align: center;
+            padding: 10px;
+            text-transform: uppercase; /* ทำให้เป็นตัวพิมพ์ใหญ่ */
         }
     </style>
 </head>
 <body>
     <h3 class="map-title">Stardoi Locations</h3>
+    
     <div id="map"></div>
 
     <script>
         function initMap() {
             const mapCenter = { lat: 15.8700, lng: 100.9925 };
+
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 6,
                 center: mapCenter,
-                streetViewControl: false, 
-                mapTypeControl: false    
             });
 
-            const customIconUrl = 'https://i.imgur.com/g1u2Y5w.png'; 
-
+            // เพิ่ม property 'status' เพื่อเช็ค 'coming_soon'
             const locations = [
                 {
                     position: { lat: 20.25841, lng: 100.06305 },
                     title: "StardoiCoffee & Farmstay",
-                    address: "296, Si Don Mun, Chiang Saen, Chiang Rai",
-                    url: "https://www.stardoi.com/",
-                    // === รูปภาพอัปเดตแล้ว ===
-                    image: "https://github.com/temsiripuns100/stardoi/blob/main/stardoi_cover.jpg?raw=true", 
-                    hours: "08:00 - 18:00 Daily",
-                    phone: "091-234-5678"
+                    address: "296, Si Don Mun, Chiang Saen, Chiang Rai 57150",
+                    url: "https://www.stardoi.com/"
                 },
                 {
                     position: { lat: 14.52955, lng: 101.37424 },
                     title: "StardoiFarm Khaoyai",
-                    address: "161/2, Mu Si, Pak Chong, Nakhon Ratchasima",
-                    url: "https://kaehcare.github.io/StardoiFarmKhaoyaiMap/",
-                    // === รูปภาพอัปเดตแล้ว ===
-                    image: "https://github.com/temsiripuns100/stardoi/blob/main/stardoi_kh.jpg?raw=true",
-                    hours: "09:00 - 19:00 (Closed Wed)",
-                    phone: "092-345-6789"
+                    address: "161/2, Mu Si, Pak Chong, Nakhon Ratchasima 30130",
+                    url: "https://kaehcare.github.io/StardoiFarmKhaoyaiMap/"
                 },
                 {
                     position: { lat: 12.9342, lng: 100.8825 },
                     title: "StardoiFarm Pattaya",
-                    status: 'coming_soon'
+                    address: "Pattaya, Chonburi",
+                    url: null,
+                    status: 'coming_soon' // <-- เพิ่ม status สำหรับเช็คเงื่อนไข
                 }
             ];
 
@@ -124,33 +96,21 @@
                     position: location.position,
                     map: map,
                     title: location.title,
-                    icon: location.status !== 'coming_soon' ? {
-                        url: customIconUrl,
-                        scaledSize: new google.maps.Size(48, 48)
-                    } : null,
-                    animation: google.maps.Animation.DROP
                 });
 
                 let contentString = '';
+
+                // **แก้ไขจุดนี้: เพิ่มเงื่อนไขสำหรับ 'coming_soon'**
                 if (location.status === 'coming_soon') {
-                    contentString = `<div class="info-window-content" style="padding:10px;"><strong>COMING SOON</strong></div>`;
+                    contentString = `<div class="coming-soon-popup">COMING SOON</div>`;
                 } else {
-                    const destination = `${location.position.lat},${location.position.lng}`;
-                    const navigationUrl = `http://googleusercontent.com/maps/google.com/11{destination}`;
-                    
                     contentString = `
                         <div class="info-window-content">
-                            <img src="${location.image}" alt="${location.title}" class="info-window-image">
-                            <strong>${location.title}</strong>
-                            <div class="info-window-details">
-                                <p>📍 ${location.address}</p>
-                                <p>⏰ ${location.hours}</p>
-                                <p>📞 <a href="tel:${location.phone}">${location.phone}</a></p>
-                            </div>
-                            <div class="info-window-buttons">
-                                <a href="${location.url}" target="_blank" class="action-button">Website</a>
-                                <a href="${navigationUrl}" target="_blank" class="action-button directions">Directions</a>
-                            </div>
+                            <a href="${location.url}" target="_blank">
+                                <strong>${location.title}</strong><br>
+                                ${location.address}<br>
+                                <small>(Click for more info)</small>
+                            </a>
                         </div>`;
                 }
                 
@@ -159,11 +119,15 @@
                 });
 
                 marker.addListener("click", () => {
-                    infowindow.open({ anchor: marker, map: map });
+                    infowindow.open({
+                        anchor: marker,
+                        map: map,
+                    });
                 });
             });
         }
     </script>
+
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCayqNad1Jo3-NsS18tu92trlEJw-o4IoM&callback=initMap">
     </script>
